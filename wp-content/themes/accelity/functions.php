@@ -26,7 +26,7 @@ function nylon_include($includes) {
 	foreach ($includes as $file) {
 		if (!($filepath = locate_template($file))) {
 			trigger_error(
-				sprintf(__("Error locating %s for inclusion", "nylon"), $file),
+				sprintf(__("Error locating %s for inclusion", "accelity"), $file),
 				E_USER_ERROR
 			);
 		}
@@ -44,36 +44,3 @@ nylon_include($monk_includes);
  */
 
 add_theme_support("disable-custom-colors");
-
-add_theme_support("editor-color-palette", [
-	[
-		"name" => __("Blue", "nylon"),
-		"slug" => "blue",
-		"color" => "#59BACC"
-	],
-	[
-		"name" => __("Green", "nylon"),
-		"slug" => "green",
-		"color" => "#58AD69"
-	],
-	[
-		"name" => __("Orange", "nylon"),
-		"slug" => "orange",
-		"color" => "#FFBC49"
-	],
-	[
-		"name" => __("Red", "nylon"),
-		"slug" => "red",
-		"color" => "#E2574C"
-	],
-	[
-		"name" => __("White", "nylon"),
-		"slug" => "white",
-		"color" => "#FFF"
-	],
-	[
-		"name" => __("Transparent", "nylon"),
-		"slug" => "transparent",
-		"color" => "transparent"
-	]
-]);

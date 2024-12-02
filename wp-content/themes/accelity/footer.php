@@ -5,7 +5,7 @@
       <div class="container mx-auto xl py-20 px-4 sm:px-0">
         <div class="flex justify-between w-full">
           <a href="<?= get_bloginfo('url') ?>">
-            Kikemonk
+            Accelity
           </a>
 
           <div class="social-icons">
@@ -18,6 +18,7 @@
         <!-- Footer Widgets -->
         <div class="footer-widgets flex justify-between w-full mt-12 flex-col md:flex-row gap-10 md:gap-20">
           <?php 
+          if($widgets) :
             foreach($widgets as $widget) : 
               $title = $widget['title'];
               $links = $widget['links'];
@@ -37,13 +38,13 @@
                 <?php endforeach; ?>
               </nav>
             </div>
-          <?php endforeach; ?>
+          <?php endforeach; endif;?>
         </div>
 
         <!-- Copyright area -->
          <div class="w-full copyrights mt-10">
           <div class="top-copy flex gap-5 md:gap-10 flex-col md:flex-row">
-            <div>Copyright © 2024. Kikemonk </div>
+            <div>Copyright © 2024. Accelity </div>
             <div class="terms-nav">
               <?= wp_nav_menu(array('menu' => 'Terms Menu')); ?>
             </div>
