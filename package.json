@@ -1,7 +1,7 @@
 {
-  "name": "Kikemonk",
+  "name": "Accelity",
   "version": "1.1.0",
-  "description": "Kikemonk new Site",
+  "description": "Accelity Site Builder",
   "main": "index.js",
   "scripts": {
     "dev": "npm run development",

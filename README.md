@@ -1,2 +1,2 @@
-# Kikemonk-WordPress-Docker
- Docker Starter File with Kikemonk's Theme
+# Accelity WordPress Theme
+ Starter Theme for Accelity websites themes
