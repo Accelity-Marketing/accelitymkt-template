@@ -1,32 +1,46 @@
 <?php
-// Global Block
-$id = $block["id"];
+$blockClasses = [];
+
+// Global block variables
+$id = $block['id'];
 $customID = get_field('block_id');
 $blockBG = get_field('block_background');
-if($customID){
-	$blockID = $customID;
-} else { 
-	$blockID = $id;
+$paddingOptions = get_field('padding_options');
+$marginOptions = get_field('margin_options');
+
+// Get and clean the block name (e.g., "acf/hero" → "hero")
+$blockName = str_replace('acf/', '', $block['name']);
+
+// Set block ID (custom if available)
+$blockID = $customID ? $customID : $id;
+
+// Handle padding options
+if ($paddingOptions) {
+	$paddingTop = 'pt-' . $paddingOptions['padding_top'];
+	$paddingBottom = 'pb-' . $paddingOptions['padding_bottom'];
+	array_push($blockClasses, $paddingTop, $paddingBottom);
 }
-$layout = get_field('layout');
-$blockTitle = get_field('block_title');
-$blockContent = get_field('block_content');
-$blockCTA = get_field('block_cta');
-$blockImage = get_field('block_image');
-$order = 'md:order-first';
-if($layout == 'image-text'){ $order = 'md:order-last'; }
+
+// Handle margin options
+if ($marginOptions) {
+	$marginTop = 'mt-' . $marginOptions['margin_top'];
+	$marginBottom = 'mb-' . $marginOptions['margin_bottom'];
+	array_push($blockClasses, $marginTop, $marginBottom);
+}
+
+// Handle background color or class
+if ($blockBG) {
+	array_push($blockClasses, 'bg-' . $blockBG);
+}
+
+// Add base class for the block (e.g., "block-hero")
+array_unshift($blockClasses, 'block-' . $blockName);
 ?>
 
-<section id="<?= $blockID; ?>" data-block="template-block" class="<?= $blockBG ?> side-by-side-block py-20 px-6 sm:px-0">
- <div class="container xl mx-auto flex gap-20 flex-col md:flex-row md:items-center">
-	<div class="text-content order-first basis-2/4 <?= $order ?>">
-		<?= $blockTitle ? '<h2>' . $blockTitle . '</h2>' : null; ?>
-		<?= $blockContent ? '<p class="lead">' . $blockContent . '</p>' : null; ?>
-		<?= $blockCTA ? '<a class="mt-10 btn btn-tertiary btn-medium" href="'. $blockCTA['url'] .'" target="' . $blockCTA['target'] . '">' . $blockCTA['title'] . '</a>' : null; ?>
-	</div>
-
-	<div class="image-content flex justify-center basis-2/4">
-		<img src="<?= $blockImage['url'] ?>" alt="<?= $blockImage['name']; ?>">
-	</div>
- </div>
+<section 
+	id="<?= esc_attr($blockID); ?>" 
+	data-block="<?= esc_attr($blockName); ?>" 
+	class="<?= esc_attr(implode(' ', $blockClasses)); ?>"
+>
+	<!-- Block content goes here -->
 </section>

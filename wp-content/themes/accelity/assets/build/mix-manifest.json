@@ -1,5 +1,6 @@
 {
     "/main.js": "/main.js",
-    "/manifest.js": "/manifest.js",
-    "/style.css": "/style.css"
+    "/main.js.map": "/main.js.map",
+    "/style.css": "/style.css",
+    "/style.css.map": "/style.css.map"
 }

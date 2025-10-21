@@ -1,30 +1,46 @@
 <?php
-// Global Block
-$id = $block["id"];
+$blockClasses = [];
+
+// Global block variables
+$id = $block['id'];
 $customID = get_field('block_id');
-if($customID){
-	$blockID = $customID;
-} else { 
-	$blockID = $id;
+$blockBG = get_field('block_background');
+$paddingOptions = get_field('padding_options');
+$marginOptions = get_field('margin_options');
+
+// Get and clean the block name (e.g., "acf/hero" → "hero")
+$blockName = str_replace('acf/', '', $block['name']);
+
+// Set block ID (custom if available)
+$blockID = $customID ? $customID : $id;
+
+// Handle padding options
+if ($paddingOptions) {
+	$paddingTop = 'pt-' . $paddingOptions['padding_top'];
+	$paddingBottom = 'pb-' . $paddingOptions['padding_bottom'];
+	array_push($blockClasses, $paddingTop, $paddingBottom);
 }
 
-$blockTitle = get_field('block_title');
-$blockContent = get_field('block_content');
-$blockCTA = get_field('block_cta');
-$blockImage = get_field('block_image');
-$blockBGImage = get_field('block_background_image');
-$addMask = get_field('add_circle_mask');
+// Handle margin options
+if ($marginOptions) {
+	$marginTop = 'mt-' . $marginOptions['margin_top'];
+	$marginBottom = 'mb-' . $marginOptions['margin_bottom'];
+	array_push($blockClasses, $marginTop, $marginBottom);
+}
+
+// Handle background color or class
+if ($blockBG) {
+	array_push($blockClasses, 'bg-' . $blockBG);
+}
+
+// Add base class for the block (e.g., "block-hero")
+array_unshift($blockClasses, 'block-' . $blockName);
 ?>
 
-<section id="<?= $blockID; ?>" data-block="template-block" class="base-block hero-block py-40 md:py-52 bg-cover px-6 sm:px-0" <?= $blockBGImage ? 'style="background-image:url(' . $blockBGImage['url'] . ');"' : null ?>>
- <div class="container mx-auto xl">
-  <?= $addMask ? '<div class="circle-mask"></div>' : null ?>
-  <div class="hero-text w-full sm:w-1/2">
-    <?= $blockTitle ? '<h1 class="hero-title">' . $blockTitle . '</h1>' : null ?>
-    <?= $blockContent ? '<div class="h-content lead">' . $blockContent . '</div>' : null; ?>
-    <?= $blockCTA ? '<a href="' . $blockCTA['url'] . '" class="mt-10 hero-cta btn btn-tertiary btn-large">' . $blockCTA['title'] . '</a>' : null; ?>
-  </div>
-
-  <?= $blockImage ? '<img src="' . $blockImage['url'] . '" alt="' . $blockImage['name'] . '" class="max-w-md hero-image hidden lg:block absolute">' : null; ?>
- </div>
+<section 
+	id="<?= esc_attr($blockID); ?>" 
+	data-block="<?= esc_attr($blockName); ?>" 
+	class="<?= esc_attr(implode(' ', $blockClasses)); ?>"
+>
+	<!-- Block content goes here -->
 </section>
